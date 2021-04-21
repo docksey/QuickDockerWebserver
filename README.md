@@ -22,6 +22,6 @@ docker run -d -p 80:80 --name nginx-proxy --net nginx-proxy -v /var/run/docker.s
 ```
 For each website you want to puslish, run this command from the /websites directory (wherever the dockerfile lives)
 ```
-docker run -d --name igotkindahigh --expose 80 -v /websites/IGotKindaHigh/www:/var/www/html --net nginx-proxy -e VIRTUAL_HOST=igotkindahigh.today local-webserver
+docker run -d --name yourwebsite --expose 80 -v /websites/yourwebsite/www:/var/www/html --net nginx-proxy -e VIRTUAL_HOST=yourwebsite.meh local-webserver
 ```
 
