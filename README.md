@@ -2,8 +2,8 @@
 
 // https://github.com/nginx-proxy/nginx-proxy
 
-I have a directory on the host machine /websites.
-Under this directory I keep the local git repos and a single dockerfile.
+Create a directory on the host machine /websites.
+Under this directory, you'll keep the local git repos and a single dockerfile.
 
 ```
 FROM ubuntu
