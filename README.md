@@ -56,7 +56,7 @@ sudo docker run -d -p 80:80 -p 443:443 \
     --label com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true \
     jwilder/nginx-proxy
 ```
-## Install Let's Encrypt Cpmanion
+## Install Let's Encrypt Companion
 ```
 sudo docker run -d \
     --name nginx-letsencrypt \
