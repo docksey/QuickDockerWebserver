@@ -6,12 +6,12 @@ To stand up the webserver from scratch:
 
 ## The Needful
 ```
-sudo apt update
-sudo apt upgrade
+sudo apt-get update
+sudo apt-get upgrade
 ```
 ## Install Firewall and Configure
 ```
-sudo apt install ufw
+sudo apt-get install ufw
 sudo ufw allow openssh
 sudo ufw enable
 sudo ufw default deny incoming
@@ -19,12 +19,12 @@ sudo ufw default deny incoming
 ## Install Docker
 Remove existing Docker shizz (as needed)
 ```
-sudo apt remove docker docker-engine docker.io containerd runc
-sudo apt update
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
 ```
-Update the apt package index and install packages to allow apt to use a repository over HTTPS:
+Update the apt-get package index and install packages to allow apt-get to use a repository over HTTPS:
 ```
-sudo apt install apt-transport-https ca-certificates curl gnupg lsb-releasey
+sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-releasey
 ```
 Add Docker’s official GPG key:
 ```
@@ -38,8 +38,8 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] 
 ```
 Install Docker
 ```
-sudo apt update
-sudo apt install docker-ce docker-ce-cli containerd.io
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 ## Install NGinx Proxy
 *with support for let's encrypt companion*
@@ -92,9 +92,9 @@ sudo docker run -d \
     -e VIRTUAL_PORT=9000 \
     portainer/portainer-ce --admin-password-file='/tmp/poop.txt'
 ```
-Deploy websites
+## Deploy websites
 Create a directory on the host machine /websites.
-Under this directory, you'll keep the local git repos and a single dockerfile.
+CD to this directory and create a single dockerfile with the following contents:
 ```
 FROM ubuntu
 RUN apt-get update
@@ -103,7 +103,13 @@ EXPOSE 80
 EXPOSE 443
 CMD ["nginx","-g","daemon off;"]
 ```
-The repos each have a www folder which is mapped to /var/www/html in their own docker container
+To build the docker image
+```
+docker build -t local-webserver .
+```
+Next step is to clone each of your website repos into their own folders under /websites.
+My repos each have a www folder at the top level which is mapped to /var/www/html inside the container. you'll need to adjust this -v declaration if your repo has a different layout.
+
 For each website you want to puslish, run this command from the /websites directory (wherever the dockerfile lives)
 ```
 docker run -d \
@@ -118,4 +124,4 @@ docker run -d \
     -e LETSENCRYPT_HOST=yourwebsite.meh \
     local-webserver
 ```
-
+Now if you make a change to your website locally my pulling new changes or manually modding a file, it should reflect within your hosted container with no delay. Sweet, huh?
